@@ -1,7 +1,11 @@
 import express, { Router }  from 'express';
 import api from './routes/index';
+import dotenv from 'dotenv'
+
+dotenv.config();
 
 const app = express();
+
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))

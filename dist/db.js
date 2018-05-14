@@ -13,9 +13,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = __importDefault(require("sequelize"));
 var sequelize = null;
-if (process.env.HEROKU_POSTGRESQL_BRONZE_URL) {
+console.log(process.env.DATABASE_URL);
+if (process.env.DATABASE_URL) {
     // the application is executed on Heroku ... use the postgres database
-    sequelize = new sequelize_1.default(process.env.HEROKU_POSTGRESQL_BRONZE_URL, {
+    sequelize = new sequelize_1.default(process.env.DATABASE_URL, {
         dialect: 'postgres',
         protocol: 'postgres',
         port: 5432,
