@@ -6,15 +6,34 @@ import SubjectModel from './models/Subject'
 import BatchModel from './models/Batch'
 import LectureModel from './models/Lecture'
 
-export const db = new Sequelize('LearningManagement','sunny','sunny',
-{
+var sequelize = null
+
+  if (process.env.HEROKU_POSTGRESQL_BRONZE_URL) {
+    // the application is executed on Heroku ... use the postgres database
+    sequelize = new Sequelize(process.env.HEROKU_POSTGRESQL_BRONZE_URL, {
+      dialect:  'postgres',
+      protocol: 'postgres',
+      port:     5432,
+      host:     'ec2-23-23-247-245.compute-1.amazonaws.com',
+      logging:  true //false
+    })
+  } 
+  else {
+    // the application is executed on the local machine ... use mysql
+    // sequelize = new Sequelize('example-app-db', 'root', null)
+    sequelize = new Sequelize('LearningManagement','sunny','sunny',
+    {
     host:'SUNNY3147223',
     dialect:'mssql',
     pool: {
         max: 5,
         min: 0
       },
-})
+    })
+  }
+
+  const db = sequelize
+
 
 export const Course = db.define<CourseModel,any>('courses',{
     id :{

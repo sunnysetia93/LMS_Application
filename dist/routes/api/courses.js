@@ -5,7 +5,7 @@ const db_1 = require("../../db");
 const route = express.Router();
 route.get('/', (req, res) => {
     db_1.Course.findAll()
-        .then(data => {
+        .then((data) => {
         res.status(200).json(data);
     })
         .catch(err => {
@@ -22,7 +22,7 @@ route.get('/:id', (req, res) => {
     }
     else {
         db_1.Course.findById(req.params.id)
-            .then(data => {
+            .then((data) => {
             if (data) {
                 res.status(200).json(data);
             }

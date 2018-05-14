@@ -22,7 +22,7 @@ route.get('/:id', (req, res) => {
     }
     else {
         db_1.Student.findById(req.params.id)
-            .then(data => {
+            .then((data) => {
             if (data) {
                 res.status(200).json(data);
             }

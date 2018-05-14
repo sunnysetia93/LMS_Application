@@ -12,15 +12,31 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = __importDefault(require("sequelize"));
-exports.db = new sequelize_1.default('LearningManagement', 'sunny', 'sunny', {
-    host: 'SUNNY3147223',
-    dialect: 'mssql',
-    pool: {
-        max: 5,
-        min: 0
-    },
-});
-exports.Course = exports.db.define('courses', {
+var sequelize = null;
+if (process.env.HEROKU_POSTGRESQL_BRONZE_URL) {
+    // the application is executed on Heroku ... use the postgres database
+    sequelize = new sequelize_1.default(process.env.HEROKU_POSTGRESQL_BRONZE_URL, {
+        dialect: 'postgres',
+        protocol: 'postgres',
+        port: 5432,
+        host: 'ec2-23-23-247-245.compute-1.amazonaws.com',
+        logging: true //false
+    });
+}
+else {
+    // the application is executed on the local machine ... use mysql
+    // sequelize = new Sequelize('example-app-db', 'root', null)
+    sequelize = new sequelize_1.default('LearningManagement', 'sunny', 'sunny', {
+        host: 'SUNNY3147223',
+        dialect: 'mssql',
+        pool: {
+            max: 5,
+            min: 0
+        },
+    });
+}
+const db = sequelize;
+exports.Course = db.define('courses', {
     id: {
         type: sequelize_1.default.INTEGER,
         autoIncrement: true,
@@ -31,7 +47,7 @@ exports.Course = exports.db.define('courses', {
         allowNull: false
     }
 });
-exports.Student = exports.db.define('students', {
+exports.Student = db.define('students', {
     id: {
         type: sequelize_1.default.INTEGER,
         autoIncrement: true,
@@ -49,7 +65,7 @@ exports.Student = exports.db.define('students', {
         type: sequelize_1.default.STRING
     }
 });
-exports.Teacher = exports.db.define('teachers', {
+exports.Teacher = db.define('teachers', {
     id: {
         type: sequelize_1.default.INTEGER,
         autoIncrement: true,
@@ -63,27 +79,27 @@ exports.Teacher = exports.db.define('teachers', {
         type: sequelize_1.default.STRING
     }
 });
-exports.Subject = exports.db.define('subjects', {
+exports.Subject = db.define('subjects', {
     name: {
         type: sequelize_1.default.STRING,
         allowNull: false
     }
 });
-exports.Batch = exports.db.define('batches', {
+exports.Batch = db.define('batches', {
     name: {
         type: sequelize_1.default.STRING,
         allowNull: false
     },
     startYear: sequelize_1.default.INTEGER
 });
-exports.Lecture = exports.db.define('lectures', {
+exports.Lecture = db.define('lectures', {
     id: {
         type: sequelize_1.default.INTEGER,
         autoIncrement: true,
         primaryKey: true
     }
 });
-exports.StudentBatch = exports.db.define('studentbatch', {
+exports.StudentBatch = db.define('studentbatch', {
     id: {
         type: sequelize_1.default.INTEGER,
         primaryKey: true,
@@ -109,8 +125,8 @@ exports.Batch.belongsToMany(exports.Student, { through: exports.StudentBatch });
 function dbRefresh() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            yield exports.db.authenticate();
-            yield exports.db.sync({ force: false });
+            yield db.authenticate();
+            yield db.sync({ force: false });
         }
         catch (err) {
             console.log(err);

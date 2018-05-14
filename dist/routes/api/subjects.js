@@ -22,7 +22,7 @@ route.get('/:id', (req, res) => {
     }
     else {
         db_1.Subject.findById(req.params.id)
-            .then(data => {
+            .then((data) => {
             if (data) {
                 res.status(200).json(data);
             }
@@ -70,7 +70,7 @@ route.post('/', (req, res) => {
         name: req.body.name,
         courseId: req.body.courseId
     })
-        .then((createdCourse) => {
+        .then((createdSub) => {
         res.status(201).json({
             message: "Successfully Created!"
         });

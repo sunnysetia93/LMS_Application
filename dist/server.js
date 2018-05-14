@@ -10,6 +10,7 @@ app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use('/', express_1.default.static(__dirname + '/../public_static'));
 app.use('/', index_1.default);
-app.listen(8080, () => {
+let PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
     console.log("server running");
 });
