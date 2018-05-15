@@ -10,7 +10,7 @@ var sequelize = null
 
   console.log(process.env.DATABASE_URL)
   if (process.env.DATABASE_URL) {
-    // the application is executed on Heroku ... use the postgres database
+
     sequelize = new Sequelize(process.env.DATABASE_URL, {
       dialect:  'postgres',
       protocol: 'postgres',
@@ -20,8 +20,7 @@ var sequelize = null
     })
   } 
   else {
-    // the application is executed on the local machine ... use mysql
-    // sequelize = new Sequelize('example-app-db', 'root', null)
+ 
     sequelize = new Sequelize('LearningManagement','sunny','sunny',
     {
     host:'SUNNY3147223',
@@ -33,7 +32,7 @@ var sequelize = null
     })
   }
 
-  const db = sequelize
+const db = sequelize
 
 
 export const Course = db.define<CourseModel,any>('courses',{

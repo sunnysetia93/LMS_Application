@@ -152,6 +152,7 @@ route.get('/:id/batches/:batchId/lectures/:lectId', (req, res) => {
             if (data) {
                 db_1.Lecture.find({
                     where: {
+                        batchId: req.params.batchId,
                         id: req.params.lectId
                     }
                 })

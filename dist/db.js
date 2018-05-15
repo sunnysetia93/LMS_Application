@@ -15,7 +15,6 @@ const sequelize_1 = __importDefault(require("sequelize"));
 var sequelize = null;
 console.log(process.env.DATABASE_URL);
 if (process.env.DATABASE_URL) {
-    // the application is executed on Heroku ... use the postgres database
     sequelize = new sequelize_1.default(process.env.DATABASE_URL, {
         dialect: 'postgres',
         protocol: 'postgres',
@@ -25,8 +24,6 @@ if (process.env.DATABASE_URL) {
     });
 }
 else {
-    // the application is executed on the local machine ... use mysql
-    // sequelize = new Sequelize('example-app-db', 'root', null)
     sequelize = new sequelize_1.default('LearningManagement', 'sunny', 'sunny', {
         host: 'SUNNY3147223',
         dialect: 'mssql',

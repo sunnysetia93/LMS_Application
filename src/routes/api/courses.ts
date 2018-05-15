@@ -189,6 +189,7 @@ route.get('/:id/batches/:batchId/lectures/:lectId',(req:Request,res:Response)=>{
             {   
                 Lecture.find({
                     where:{
+                        batchId:req.params.batchId,
                         id:req.params.lectId
                     }
                 })
